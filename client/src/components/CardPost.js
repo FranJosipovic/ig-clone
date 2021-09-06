@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useContext} from "react";
-import { useParams ,useHistory} from "react-router-dom";
+import { useParams ,useHistory,Link} from "react-router-dom";
 import { UserContext } from "../App";
 import M from "materialize-css"
 
@@ -16,10 +16,7 @@ const CardPost = () => {
             }
         }).then(res=>res.json())
         .then(result => {
-            console.log(result)
-            console.log(result.singlePost)
             setPost(result.singlePost)
-            console.log(post)
         })
     }, [])
 
@@ -107,7 +104,7 @@ const CardPost = () => {
     return (  
         <div className="home">
         {post && <div className="card home-card" key={post._id}>
-                        <h5>{post.postedBy.name} {id===state._id && <i className="material-icons" style={{float:"right"}} onClick={()=>{deletePost()}}>delete</i>}</h5>
+        <h5><Link to={post.postedBy._id === state._id ? "/profile" : `/profile/${post.postedBy._id}`}>{post.postedBy.name}</Link> {post.postedBy._id === state._id && <i className="material-icons" style={{float:"right"}} onClick={()=>{deletePost(post._id)}}>delete</i>}</h5>
                         <div className="card-image">
                             <img src={post.photo}
                             alt="homeimage"   

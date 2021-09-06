@@ -92,3 +92,7 @@ body {
   top: 8px;
   left: 16px;
 }
+
+.material-icons {
+  cursor: pointer !important;
+}

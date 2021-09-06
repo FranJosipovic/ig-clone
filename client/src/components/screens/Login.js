@@ -1,16 +1,19 @@
 import React,{useState,useContext} from "react";
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import M from "materialize-css"
+import validator from "validator"
 
 const Login = () => {
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const [passwordIsVisible,setPasswordIsVisible] = useState(false)
 
     const PostData = () => {
-        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+        console.log()
+        if(validator.isEmail(email)===false){
             M.toast({html:'invalid email',classes:"red"})
             return
         }
@@ -49,16 +52,26 @@ const Login = () => {
                 value={email}
                 onChange={(e)=>setEmail(e.target.value)}
                 />
+                <div style={{display:"flex",flexDirection:"row",alignItems:"baseline"}}>
                 <input
-                type="password"
+                type={passwordIsVisible ?"text" :"password"}
                 placeholder="password"
                 value={password}
                 onChange={(e)=>setPassword(e.target.value)}
                 />
+                {passwordIsVisible ? <i class="material-icons" onClick={() => {setPasswordIsVisible(false)}}>visibility</i> : <i class="material-icons" onClick={()=>{setPasswordIsVisible(true)}}>visibility_off</i>}
+                </div>
                 <button className="btn waves-effect waves-light #42a5f5 blue lighten-1"
                 onClick={()=>PostData()}>
-                Submit
+                Log In
                 </button>
+                <div style={{display:"flex",alignItems:"baseline",justifyContent:"center"}}>
+                    <h6>Don't have an account</h6>
+                    <Link to="/signup" style={{marginLeft:"8px"}}><p style={{color:"blue"}}>Sign Up</p></Link>
+                </div>
+                <div style={{display:"flex",alignItems:"baseline",justifyContent:"center"}}>
+                    <Link to="/reset" style={{marginLeft:"8px"}}><p style={{color:"blue"}}>Forgot password?</p></Link>
+                </div>
             </div>
      );
 }

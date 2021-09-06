@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema({
     pic : {
         type : String,
     },
+    resetToken: String,
+    tokenExpires: Date,
     following : [{type:ObjectId,ref:"User"}],
     followers : [{type:ObjectId,ref:"User"}],
     password : {

@@ -10,6 +10,8 @@ import Profile from './components/screens/Profile';
 import SignUp from './components/screens/Signup';
 import UserProfile from './components/screens/UserProfile'
 import Discover from './components/screens/Discover'
+import Reset from './components/screens/Reset'
+import NewPassword from './components/screens/NewPassword';
 import {reducer,initialState} from './reducers/UserReducer'
 
 export const UserContext = createContext()
@@ -23,7 +25,9 @@ export const UserContext = createContext()
     if(user){
       dispatch({type:"USER",payload:user})
     }else{
-      history.push("/login")
+      if(!history.location.pathname.startsWith('/reset')){
+        history.push("/login")
+      }
     }
   }, [])
   return (
@@ -36,6 +40,8 @@ export const UserContext = createContext()
     <Route path="/post/:id"><CardPost/></Route>
     <Route path="/profile/:userId"><UserProfile/></Route>
     <Route path="/discover"><Discover/></Route>
+    <Route exact path="/reset"><Reset/></Route>
+    <Route path="/reset/:token"><NewPassword/></Route>
   </Switch>
   )
 }

@@ -38,7 +38,6 @@ const Profile = () => {
             })
         }).then(res=>res.json())
         .then(result => {
-            console.log(result)
             dispatch({type:"UPDATE", payload:{following:result.following,followers:result.followers}})
             localStorage.setItem("user",JSON.stringify(result))
             setUserData(prevState => {
